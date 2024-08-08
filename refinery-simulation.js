@@ -64,6 +64,9 @@ function createRefinery() {
         },
         function (xhr) {
             console.log('Refinery: ' + (xhr.loaded / xhr.total * 100) + '% loaded');
+            if (xhr.loaded === xhr.total) {
+                console.log('Refinery fully loaded');
+            }
         },
         function (error) {
             console.error('An error happened while loading the refinery', error);
@@ -89,12 +92,16 @@ function loadTruck() {
         },
         function (xhr) {
             console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+            if (xhr.loaded === xhr.total) {
+                console.log('Truck fully loaded');
+            }
         },
         function (error) {
             console.error('Error loading truck:', error);
         }
     );
 }
+
 
 
 function setupGUI() {
