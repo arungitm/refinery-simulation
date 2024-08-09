@@ -50,7 +50,7 @@ function createRefinery() {
     console.log('Starting to load refinery...');
     const loader = new GLTFLoader();
     loader.load(
-        'https://refinery-92e4b.appspot.com/distillery-equipment.glb?access_token=2964ab4e-72ba-4b42-9430-7f5163ac2f38',
+       'https://storage.googleapis.com/refinery-92e4b.appspot.com/distillery-equipment.glb?access_token=2964ab4e-72ba-4b42-9430-7f5163ac2f38',
         function (gltf) {
             console.log('Refinery equipment loaded successfully');
             refineryComponents.refinery = gltf.scene;
@@ -76,7 +76,7 @@ function loadTruck() {
     console.log('Starting to load truck...');
     const loader = new GLTFLoader();
     loader.load(
-        'https://refinery-92e4b.appspot.com/truck.glb?access_token=4fb5bfbd-5b28-429a-a91c-2f83184802c9',
+        'https://storage.googleapis.com/refinery-92e4b.appspot.com/truck.glb?access_token=4fb5bfbd-5b28-429a-a91c-2f83184802c9',
         function (gltf) {
             truck = gltf.scene;
             truck.scale.set(0.1, 0.1, 0.1);
