@@ -5,6 +5,7 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/refinery-simulation/dist/'
   },
   module: {
     rules: [
@@ -22,5 +23,8 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js'],
+    fallback: {
+      "path": require.resolve("path-browserify")
+    }
   },
 };
