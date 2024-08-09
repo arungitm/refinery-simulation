@@ -3,49 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENERBLAZE Refinery Simulation</title>
+    <title>Refinery Simulation - ENERBLAZE Petrochemicals</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <style>
-        #scene-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
-        #gui-container, #output-panel, #navigation-hints, #take-control { position: absolute; z-index: 10; }
-        #gui-container { top: 10px; right: 10px; }
-        #output-panel { bottom: 10px; left: 10px; background: rgba(0,0,0,0.7); padding: 10px; border-radius: 5px; }
-        #navigation-hints { bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); padding: 10px; border-radius: 5px; }
-        #take-control { top: 50%; left: 50%; transform: translate(-50%, -50%); }
-    </style>
 </head>
-<body>
+<body class="refinery-simulation">
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#ethics">Ethics</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="index.html#gallery">Gallery</a>
+        <a href="refinery-simulation.html">Refinery Simulation</a>
+    </nav>
+
     <div id="loading-screen">
-        <h1>Precision in Every Drop</h1>
         <div class="loading-circle"></div>
     </div>
 
     <div id="scene-container"></div>
-    
     <div id="gui-container"></div>
-    
-    <div id="output-panel">
-        <h3>Refinery Output</h3>
-        <p id="output-efficiency"></p>
-        <p id="output-flow"></p>
-        <p id="api-gravity"></p>
+    <div class="output-container">
+        <div id="refinery-output">Refinery Output: 0</div>
+        <div id="output-efficiency"></div>
+        <div id="output-flow"></div>
+        <div id="api-gravity"></div>
     </div>
-    
-    <div id="navigation-hints">
-        🔍 Zoom: Scroll wheel<br>
-        🔄 Rotate: Left-click + drag<br>
-        ↔️ Pan: Right-click + drag<br>
-        Take control of our refinery... it's yours now!
-    </div>
-    
-    <button id="take-control" class="cta-button">Take Control</button>
-    <a href="index.html" id="return-to-main" class="cta-button" style="position: absolute; top: 10px; left: 10px;">Return to Crude HQ</a>
+    <div id="refinery-legend"></div>
+    <button id="start-tour">Start Guided Tour</button>
+    <button id="take-control">Take Control</button>
+    <div id="tour-description"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="refinery-simulation.js"></script>
+  
+    <script type="module" src="dist/bundle.js"></script>
+
 </body>
 </html>

@@ -1,5 +1,10 @@
+import * as THREE from 'three';
+import { OrbitControls } from 'three-stdlib';
+import { GLTFLoader } from 'three-stdlib';
+import dat from 'dat.gui';
+
 let scene, camera, renderer, gui, controls;
-let refineryComponents = {};
+const refineryComponents = {};
 let flowAnimations = [];
 let truck;
 let isUserControlled = false;
@@ -18,7 +23,7 @@ function init() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.getElementById('scene-container').appendChild(renderer.domElement);
 
-    camera.position.set(0, 5, 10); // Adjust these values to zoom in closer
+    camera.position.set(0, 5, 10);
     camera.lookAt(0, 0, 0);
 
     const ambientLight = new THREE.AmbientLight(0x404040, 2);
@@ -28,7 +33,7 @@ function init() {
     directionalLight.position.set(1, 1, 1);
     scene.add(directionalLight);
 
-    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls = new OrbitControls(camera, renderer.domElement);
     controls.enabled = false;
 
     document.getElementById('loading-screen').style.display = 'block';
@@ -39,34 +44,25 @@ function init() {
     document.getElementById('take-control').addEventListener('click', takeControl);
 
     animate();
-    startTime = Date.now();
 }
 
 function createRefinery() {
     console.log('Starting to load refinery...');
-    const loader = new THREE.GLTFLoader();
+    const loader = new GLTFLoader();
     loader.load(
-        'https://firebasestorage.googleapis.com/v0/b/refinery-92e4b.appspot.com/o/distillery-equipment.glb?alt=media&token=2964ab4e-72ba-4b42-9430-7f5163ac2f38', // Include the access token
+        'https://refinery-92e4b.appspot.com/distillery-equipment.glb?access_token=2964ab4e-72ba-4b42-9430-7f5163ac2f38',
         function (gltf) {
             console.log('Refinery equipment loaded successfully');
             refineryComponents.refinery = gltf.scene;
             refineryComponents.refinery.position.set(0, 0, 0);
-            refineryComponents.refinery.scale.set(0.1, 0.1, 0.1); // Adjust scale as needed
+            refineryComponents.refinery.scale.set(0.1, 0.1, 0.1);
             scene.add(refineryComponents.refinery);
-
-            if (gltf.scene.children.length === 0 || !gltf.scene.children[0].material) {
-                console.warn('No materials found, applying default');
-                applyDefaultMaterials(gltf.scene);
-            }
 
             document.getElementById('loading-screen').style.display = 'none';
             document.getElementById('take-control').style.display = 'block';
         },
         function (xhr) {
             console.log('Refinery: ' + (xhr.loaded / xhr.total * 100) + '% loaded');
-            if (xhr.loaded === xhr.total) {
-                console.log('Refinery fully loaded');
-            }
         },
         function (error) {
             console.error('An error happened while loading the refinery', error);
@@ -78,31 +74,24 @@ function createRefinery() {
 
 function loadTruck() {
     console.log('Starting to load truck...');
-    const loader = new THREE.GLTFLoader();
+    const loader = new GLTFLoader();
     loader.load(
-        'https://firebasestorage.googleapis.com/v0/b/refinery-92e4b.appspot.com/o/truck.glb?alt=media&token=4fb5bfbd-5b28-429a-a91c-2f83184802c9', // Include the access token
+        'https://refinery-92e4b.appspot.com/truck.glb?access_token=4fb5bfbd-5b28-429a-a91c-2f83184802c9',
         function (gltf) {
-            console.log('Truck loaded successfully', gltf);
             truck = gltf.scene;
             truck.scale.set(0.1, 0.1, 0.1);
             truck.position.set(2, 0, 0);
             truck.rotation.y = Math.PI / 2;
             scene.add(truck);
-            console.log('Truck added to scene');
         },
         function (xhr) {
             console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-            if (xhr.loaded === xhr.total) {
-                console.log('Truck fully loaded');
-            }
         },
         function (error) {
             console.error('Error loading truck:', error);
         }
     );
 }
-
-
 
 function setupGUI() {
     gui = new dat.GUI({ autoPlace: false });
@@ -115,17 +104,7 @@ function setupGUI() {
 }
 
 function updateRefinery() {
-    // Update visual elements
-    if (refineryComponents.refinery) {
-        refineryComponents.refinery.traverse((child) => {
-            if (child.isMesh) {
-                child.material.color.setHex(0xffcc00);
-            }
-        });
-    }
-
-    // Update flow speed based on crude input
-    const inputFlowSpeed = params.crudeInput / 1000; // Adjust this factor as needed
+    const inputFlowSpeed = params.crudeInput / 1000;
     const outputFlowSpeed = calculateOutputFlow(params.crudeInput, params.distillationTemp, params.catalystEfficiency);
 
     flowAnimations.forEach((animation, index) => {
@@ -138,13 +117,12 @@ function updateRefinery() {
 function calculateOutputFlow(crudeInput, distillationTemp, catalystEfficiency) {
     const distillationFactor = Math.min(1, distillationTemp / 400);
     const output = crudeInput * distillationFactor * catalystEfficiency;
-    return output / 1000; // Adjust this factor as needed for animation speed
+    return output / 1000;
 }
 
 function updateOutput() {
     const outputFlow = calculateOutputFlow(params.crudeInput, params.distillationTemp, params.catalystEfficiency);
     const efficiency = (outputFlow / params.crudeInput) * 100;
-
     const apiGravity = (141.5 / params.specificGravity) - 131.5;
 
     document.getElementById('output-efficiency').textContent = `Refinery Efficiency: ${efficiency.toFixed(1)}%`;
@@ -177,3 +155,97 @@ function onWindowResize() {
 }
 
 window.addEventListener('load', init);
+
+function addTooltips() {
+    const tooltipData = {
+        'crude-storage': 'Stores incoming crude oil before processing',
+        'distillation-tower': 'Separates crude oil into different fractions',
+        'catalytic-cracker': 'Breaks down heavy hydrocarbons into lighter ones',
+    };
+
+    Object.keys(tooltipData).forEach(componentId => {
+        const component = scene.getObjectByName(componentId);
+        if (component) {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'tooltip';
+            tooltip.textContent = tooltipData[componentId];
+
+            component.userData.tooltip = tooltip;
+            document.body.appendChild(tooltip);
+
+            component.addEventListener('mouseover', showTooltip);
+            component.addEventListener('mouseout', hideTooltip);
+        }
+    });
+}
+
+function showTooltip(event) {
+    const tooltip = event.target.userData.tooltip;
+    tooltip.style.display = 'block';
+    tooltip.style.left = event.clientX + 'px';
+    tooltip.style.top = event.clientY + 'px';
+}
+
+function hideTooltip(event) {
+    event.target.userData.tooltip.style.display = 'none';
+}
+
+function createLegend() {
+    const legend = document.createElement('div');
+    legend.id = 'refinery-legend';
+    legend.innerHTML = `
+        <h3>Refinery Components</h3>
+        <ul>
+            <li><span class="legend-color" style="background-color: #808080;"></span> Crude Oil Storage</li>
+            <li><span class="legend-color" style="background-color: #A0A0A0;"></span> Distillation Tower</li>
+            <li><span class="legend-color" style="background-color: #C0C0C0;"></span> Catalytic Cracker</li>
+        </ul>
+    `;
+    document.body.appendChild(legend);
+}
+
+let tourStep = 0;
+const tourSteps = [
+    { component: 'crude-storage', description: 'We start with crude oil storage...' },
+    { component: 'distillation-tower', description: 'Next, the oil moves to the distillation tower...' },
+];
+
+function startGuidedTour() {
+    tourStep = 0;
+    showNextTourStep();
+}
+
+function showNextTourStep() {
+    if (tourStep < tourSteps.length) {
+        const step = tourSteps[tourStep];
+        const component = scene.getObjectByName(step.component);
+        if (component) {
+            camera.position.copy(component.position);
+            camera.position.z += 5;
+            camera.lookAt(component.position);
+
+            showTourDescription(step.description);
+        }
+        tourStep++;
+    } else {
+        endGuidedTour();
+    }
+}
+
+function showTourDescription(description) {
+    const tourBox = document.getElementById('tour-description') || document.createElement('div');
+    tourBox.id = 'tour-description';
+    tourBox.textContent = description;
+    document.body.appendChild(tourBox);
+}
+
+function endGuidedTour() {
+    const tourBox = document.getElementById('tour-description');
+    if (tourBox) tourBox.remove();
+    camera.position.set(0, 5, 10);
+    camera.lookAt(0, 0, 0);
+}
+
+addTooltips();
+createLegend();
+document.getElementById('start-tour').addEventListener('click', startGuidedTour);

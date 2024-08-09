@@ -1,42 +1,35 @@
-// Particle effect
-particlesJS('particles-js', {
-    particles: {
-        number: { value: 80, density: { enable: true, value_area: 800 } },
-        color: { value: "#ffc857" },
-        shape: { type: "circle" },
-        opacity: { value: 0.5, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
-        size: { value: 3, random: true, anim: { enable: true, speed: 2, size_min: 0.1, sync: false } },
-        line_linked: { enable: false },
-        move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out", bounce: false }
-    },
-    interactivity: {
-        detect_on: "canvas",
-        events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" }, resize: true },
-        modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
-    },
-    retina_detect: true
-});
+// Particle effect and other main page specific code here
+function initMainPage() {
+    particlesJS('particles-js', {
+        particles: {
+            number: { value: 80, density: { enable: true, value_area: 800 } },
+            color: { value: "#ffc857" },
+            shape: { type: "circle" },
+            opacity: { value: 0.5, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
+            size: { value: 3, random: true, anim: { enable: true, speed: 2, size_min: 0.1, sync: false } },
+            line_linked: { enable: false },
+            move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out", bounce: false }
+        },
+        interactivity: {
+            detect_on: "canvas",
+            events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" }, resize: true },
+            modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+        },
+        retina_detect: true
+    });
+}
 
 // Smooth scrolling
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
+function initSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
         });
     });
-});
-
-// Theme toggle
-const themeToggle = document.getElementById('theme-toggle');
-themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('light-mode');
-    if (document.body.classList.contains('light-mode')) {
-        themeToggle.textContent = 'Dark Mode';
-    } else {
-        themeToggle.textContent = 'Light Mode';
-    }
-});
+}
 
 // Active section highlighting and animation
 function highlightActiveSection() {
@@ -59,12 +52,9 @@ function highlightActiveSection() {
     });
 }
 
-// Update active section on scroll
-window.addEventListener('scroll', highlightActiveSection);
-
 // Floating oil drops
 function createOilDrops() {
-    const homeSection = document.getElementById('home');
+    const body = document.body;
     for (let i = 0; i < 20; i++) {
         const drop = document.createElement('div');
         drop.classList.add('oil-drop');
@@ -73,32 +63,45 @@ function createOilDrops() {
         drop.style.height = `${size}px`;
         drop.style.left = `${Math.random() * 100}%`;
         drop.style.top = `${Math.random() * 100}%`;
-        homeSection.appendChild(drop);
-
-        animateOilDrop(drop);
+        body.appendChild(drop);
     }
 }
 
-function animateOilDrop(drop) {
-    const duration = Math.random() * 5000 + 5000;
-    const keyframes = [
-        { transform: 'translate(0, 0)', opacity: 0.7 },
-        { transform: `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px)`, opacity: 0.3 },
-        { transform: 'translate(0, 0)', opacity: 0.7 }
-    ];
-    drop.animate(keyframes, {
-        duration: duration,
-        iterations: Infinity,
-        direction: 'alternate',
-        easing: 'ease-in-out'
+// Theme toggle
+function initThemeToggle() {
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            if (document.body.classList.contains('dark-theme')) {
+                themeToggle.textContent = 'Switch to Light Theme';
+            } else {
+                themeToggle.textContent = 'Switch to Dark Theme';
+            }
+        });
+    }
+}
+
+// Parallax effect
+function initParallax() {
+    window.addEventListener('scroll', () => {
+        const parallax = document.querySelector('.parallax-bg');
+        if (parallax) {
+            let scrollPosition = window.pageYOffset;
+            parallax.style.transform = 'translateY(' + scrollPosition * 0.5 + 'px)';
+        }
     });
 }
 
-// Initialize
-window.addEventListener('load', () => {
-    document.getElementById('loading-screen').style.display = 'none';
-    document.querySelector('.section').classList.add('active');
-    document.querySelector('.content').classList.add('visible');
-    highlightActiveSection();
+// Initialize everything
+function init() {
+    initMainPage();
+    initSmoothScrolling();
     createOilDrops();
-});
+    initThemeToggle();
+    initParallax();
+    window.addEventListener('scroll', highlightActiveSection);
+}
+
+// Call init when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', init);
