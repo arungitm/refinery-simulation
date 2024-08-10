@@ -93,14 +93,140 @@ function initParallax() {
     });
 }
 
+// PDF viewer functionality
+let pdfDoc = null,
+    pageNum = 1,
+    pageRendering = false,
+    pageNumPending = null,
+    scale = 1.5;
+
+const canvas = document.getElementById('pdf-render'),
+      ctx = canvas ? canvas.getContext('2d') : null;
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.worker.min.js';
+
+function renderPage(num) {
+  if (!pdfDoc) {
+    console.error('PDF document not loaded');
+    return;
+  }
+
+  pageRendering = true;
+  pdfDoc.getPage(num).then(function(page) {
+    const viewport = page.getViewport({scale: 1});
+    
+    // Adjust the scale to fit the container
+    const container = document.querySelector('.pdf-container');
+    const scaleX = container.clientWidth / viewport.width;
+    const scaleY = container.clientHeight / viewport.height;
+    const scale = Math.min(scaleX, scaleY);
+    
+    const scaledViewport = page.getViewport({scale: scale});
+
+    canvas.height = scaledViewport.height;
+    canvas.width = scaledViewport.width;
+
+    const renderContext = {
+      canvasContext: ctx,
+      viewport: scaledViewport
+    };
+    const renderTask = page.render(renderContext);
+
+    renderTask.promise.then(function() {
+      pageRendering = false;
+      if (pageNumPending !== null) {
+        renderPage(pageNumPending);
+        pageNumPending = null;
+      }
+    });
+  }).catch(function(error) {
+    console.error('Error rendering PDF page:', error);
+    pageRendering = false;
+  });
+
+  document.getElementById('page-num').textContent = num;
+}
+
+function queueRenderPage(num) {
+  if (pageRendering) {
+    pageNumPending = num;
+  } else {
+    renderPage(num);
+  }
+}
+
+function onPrevPage() {
+  if (pageNum <= 1) {
+    return;
+  }
+  pageNum--;
+  queueRenderPage(pageNum);
+}
+
+function onNextPage() {
+  if (pageNum >= pdfDoc.numPages) {
+    return;
+  }
+  pageNum++;
+  queueRenderPage(pageNum);
+}
+
+function initPDFViewer() {
+  const pdfCarousel = document.getElementById('pdf-carousel');
+  if (!pdfCarousel) {
+    console.log('PDF viewer elements not found. Skipping initialization.');
+    return;
+  }
+
+  pdfjsLib.getDocument('/assets/EnerBlaze_Mini_Profile.pdf').promise.then(function(pdfDoc_) {
+    pdfDoc = pdfDoc_;
+    document.getElementById('page-count').textContent = pdfDoc.numPages;
+
+    renderPage(pageNum);
+  }).catch(function(error) {
+    console.error('Error loading PDF:', error);
+  });
+}
+
+document.getElementById('prev-page')?.addEventListener('click', onPrevPage);
+document.getElementById('next-page')?.addEventListener('click', onNextPage);
+
+// Mobile menu functionality
+function initMobileMenu() {
+  const menuIcon = document.querySelector('.menu-icon');
+  const menuItems = document.querySelector('.menu-items');
+
+  menuIcon.addEventListener('click', () => {
+    menuItems.classList.toggle('show');
+  });
+
+  // Close menu when a link is clicked
+  menuItems.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menuItems.classList.remove('show');
+    });
+  });
+}
+
+// Adjust PDF rendering on window resize
+function handleWindowResize() {
+  if (pdfDoc) {
+    renderPage(pageNum);
+  }
+}
+
+window.addEventListener('resize', handleWindowResize);
+
 // Initialize everything
 function init() {
-    initMainPage();
-    initSmoothScrolling();
-    createOilDrops();
-    initThemeToggle();
-    initParallax();
-    window.addEventListener('scroll', highlightActiveSection);
+  initMainPage();
+  initSmoothScrolling();
+  createOilDrops();
+  initThemeToggle();
+  initParallax();
+  initPDFViewer(); // This will only run if the PDF viewer elements exist
+  initMobileMenu();
+  window.addEventListener('scroll', highlightActiveSection);
 }
 
 // Call init when the DOM is fully loaded
