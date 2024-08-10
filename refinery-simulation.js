@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three-stdlib';
-import { GLTFLoader } from 'three-stdlib';
-import dat from 'dat.gui';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import * as dat from 'dat.gui';
 
 let scene, camera, renderer, gui, controls;
 const refineryComponents = {};
@@ -49,8 +49,9 @@ function init() {
 function createRefinery() {
     console.log('Starting to load refinery...');
     const loader = new GLTFLoader();
+    const firebaseUrl = 'https://firebasestorage.googleapis.com/v0/b/refinery-92e4b.appspot.com/o/distillery-equipment.glb?alt=media&token=2964ab4e-72ba-4b42-9430-7f5163ac2f38';
     loader.load(
-        'distillery-equipment.glb',
+        firebaseUrl,
         function (gltf) {
             console.log('Refinery equipment loaded successfully');
             refineryComponents.refinery = gltf.scene;
@@ -65,9 +66,10 @@ function createRefinery() {
             console.log('Refinery: ' + (xhr.loaded / xhr.total * 100) + '% loaded');
         },
         function (error) {
-            console.error('An error happened while loading the refinery', error);
+            console.error('An error happened while loading the refinery:', error);
+            console.error('Attempted URL:', firebaseUrl);
             document.getElementById('loading-screen').style.display = 'none';
-            document.getElementById('take-control').style.display = 'block';
+            alert('Failed to load refinery model. Please check console for details.');
         }
     );
 }
@@ -75,8 +77,9 @@ function createRefinery() {
 function loadTruck() {
     console.log('Starting to load truck...');
     const loader = new GLTFLoader();
+    const firebaseUrl = 'https://firebasestorage.googleapis.com/v0/b/refinery-92e4b.appspot.com/o/truck.glb?alt=media&token=4fb5bfbd-5b28-429a-a91c-2f83184802c9';
     loader.load(
-        'truck.glb',
+        firebaseUrl,
         function (gltf) {
             truck = gltf.scene;
             truck.scale.set(0.1, 0.1, 0.1);
@@ -85,10 +88,12 @@ function loadTruck() {
             scene.add(truck);
         },
         function (xhr) {
-            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+            console.log('Truck: ' + (xhr.loaded / xhr.total * 100) + '% loaded');
         },
         function (error) {
             console.error('Error loading truck:', error);
+            console.error('Attempted URL:', firebaseUrl);
+            alert('Failed to load truck model. Please check console for details.');
         }
     );
 }
@@ -245,6 +250,8 @@ function endGuidedTour() {
     camera.position.set(0, 5, 10);
     camera.lookAt(0, 0, 0);
 }
+
+window.addEventListener('load', init);
 
 addTooltips();
 createLegend();
