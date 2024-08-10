@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [
   {
     "origin": ["https://arungitm.github.io"],
@@ -5,3 +6,12 @@
     "maxAgeSeconds": 3600
   }
 ]
+=======
+[
+  {
+    "origin": ["https://arungitm.github.io"],
+    "method": ["GET"],
+    "maxAgeSeconds": 3600
+  }
+]
+>>>>>>> origin/main
