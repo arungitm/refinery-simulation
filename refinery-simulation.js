@@ -50,6 +50,7 @@ function createRefinery() {
     console.log('Starting to load refinery...');
     const loader = new GLTFLoader();
     const firebaseUrl = 'https://firebasestorage.googleapis.com/v0/b/refinery-92e4b.appspot.com/o/distillery-equipment.glb?alt=media&token=2964ab4e-72ba-4b42-9430-7f5163ac2f38';
+    console.log('Loading refinery from:', firebaseUrl);
     loader.load(
         firebaseUrl,
         function (gltf) {
@@ -78,9 +79,11 @@ function loadTruck() {
     console.log('Starting to load truck...');
     const loader = new GLTFLoader();
     const firebaseUrl = 'https://firebasestorage.googleapis.com/v0/b/refinery-92e4b.appspot.com/o/truck.glb?alt=media&token=4fb5bfbd-5b28-429a-a91c-2f83184802c9';
+    console.log('Loading truck from:', firebaseUrl);
     loader.load(
         firebaseUrl,
         function (gltf) {
+            console.log('Truck loaded successfully');
             truck = gltf.scene;
             truck.scale.set(0.1, 0.1, 0.1);
             truck.position.set(2, 0, 0);
