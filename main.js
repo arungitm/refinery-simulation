@@ -178,7 +178,7 @@ function initPDFViewer() {
     return;
   }
 
-  pdfjsLib.getDocument('/assets/EnerBlaze_Mini_Profile.pdf').promise.then(function(pdfDoc_) {
+  pdfjsLib.getDocument('assets/EnerBlaze_Mini_Profile.pdf').promise.then(function(pdfDoc_) {
     pdfDoc = pdfDoc_;
     document.getElementById('page-count').textContent = pdfDoc.numPages;
 
