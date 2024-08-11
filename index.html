@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ENERBLAZE Petrochemicals</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
 </head>
 <body>
     <div class="gradient-overlay"></div>
     <div id="particles-js"></div>
 
     <nav class="nav">
-        <div class="menu-icon">☰</div>
         <ul class="menu-items">
             <li><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
@@ -22,44 +21,40 @@
         </ul>
     </nav>
 
-    <button id="theme-toggle">Toggle Theme</button>
-
-    <section id="home" class="section">
+    <div id="home" class="section video-section">
+        <video class="bg-video" autoplay loop muted playsinline>
+            <source src="home-background.mp4" type="video/mp4">
+        </video>
         <div class="content">
-            <i class="fas fa-industry section-icon"></i>
             <h1>ENERBLAZE Petrochemicals</h1>
             <p>Igniting the future of energy with precision and innovation</p>
             <a href="refinery-simulation.html" class="cta-button">Experience Our Refinery</a>
         </div>
-    </section>
+    </div>
 
-    <section id="about" class="section">
+    <div id="about" class="section video-section">
+        <video class="bg-video" autoplay loop muted playsinline>
+            <source src="about-background.mp4" type="video/mp4">
+        </video>
         <div class="content">
-            <div id="pdf-carousel" class="max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-                <div class="bg-gray-800 text-white p-1 flex justify-between items-center">
-                    <h2 class="text-lg font-bold">EnerBlaze Company Profile</h2>
-                    <div>
-                        <span id="page-num"></span> / <span id="page-count"></span>
-                    </div>
-                </div>
-                <div class="relative pdf-container">
-                    <canvas id="pdf-render" class="mx-auto"></canvas>
-                    <div class="absolute top-1/2 left-0 right-0 flex justify-between px-4 transform -translate-y-1/2">
-                        <button id="prev-page" class="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 focus:outline-none">
-                            &lt;
-                        </button>
-                        <button id="next-page" class="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 focus:outline-none">
-                            &gt;
-                        </button>
+            <h2>EnerBlaze Company Profile</h2>
+            <div id="pdf-carousel">
+                <div class="pdf-container">
+                    <canvas id="pdf-render"></canvas>
+                    <div class="pdf-controls">
+                        <button id="prev-page">&lt;</button>
+                        <button id="next-page">&gt;</button>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="ethics" class="section">
+    <div id="ethics" class="section video-section">
+        <video class="bg-video" autoplay loop muted playsinline>
+            <source src="ethics-background.mp4" type="video/mp4">
+        </video>
         <div class="content">
-            <i class="fas fa-balance-scale section-icon"></i>
             <h2>Our Code of Ethics</h2>
             <ul>
                 <li>Commitment to environmental sustainability</li>
@@ -69,23 +64,24 @@
                 <li>Community engagement and support</li>
             </ul>
         </div>
-    </section>
+    </div>
 
-    <section id="contact" class="section">
+    <div id="contact" class="section video-section">
+        <video class="bg-video" autoplay loop muted playsinline>
+            <source src="contact-background.mp4" type="video/mp4">
+        </video>
         <div class="content">
-            <i class="fas fa-envelope section-icon"></i>
             <h2>Contact Us</h2>
             <p>Ready to energize your business? Get in touch with us today.</p>
             <a href="mailto:info@enerblaze.com" class="cta-button">Contact Now</a>
         </div>
-    </section>
+    </div>
 
     <div class="pipeline">
         <div class="oil-flow"></div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
