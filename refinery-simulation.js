@@ -49,7 +49,7 @@ function init() {
 function createRefinery() {
     console.log('Starting to load refinery...');
     const loader = new GLTFLoader();
-    const firebaseUrl = 'https://firebasestorage.googleapis.com/v0/b/refinery-92e4b.appspot.com/o/distillery-equipment.glb?alt=media&token=2964ab4e-72ba-4b42-9430-7f5163ac2f38';
+    const firebaseUrl = 'https://firebasestorage.googleapis.com/v0/b/refinery-92e4b.appspot.com/o/distillery-equipment.glb?alt=media&token=9b72824d-e0c3-4325-82c2-9812d0e76e97';
     console.log('Loading refinery from:', firebaseUrl);
     loader.load(
         firebaseUrl,
