@@ -200,7 +200,6 @@ function hideTooltip(event) {
     event.target.userData.tooltip.style.display = 'none';
 }
 
-
 function createLegend() {
     const legend = document.createElement('div');
     legend.id = 'refinery-legend';
@@ -215,50 +214,8 @@ function createLegend() {
     document.body.appendChild(legend);
 }
 
-let tourStep = 0;
-const tourSteps = [
-    { component: 'crude-storage', description: 'We start with crude oil storage...' },
-    { component: 'distillation-tower', description: 'Next, the oil moves to the distillation tower...' },
-];
-
-function startGuidedTour() {
-    tourStep = 0;
-    showNextTourStep();
-}
-
-function showNextTourStep() {
-    if (tourStep < tourSteps.length) {
-        const step = tourSteps[tourStep];
-        const component = scene.getObjectByName(step.component);
-        if (component) {
-            camera.position.copy(component.position);
-            camera.position.z += 5;
-            camera.lookAt(component.position);
-
-            showTourDescription(step.description);
-        }
-        tourStep++;
-    } else {
-        endGuidedTour();
-    }
-}
-
-function showTourDescription(description) {
-    const tourBox = document.getElementById('tour-description') || document.createElement('div');
-    tourBox.id = 'tour-description';
-    tourBox.textContent = description;
-    document.body.appendChild(tourBox);
-}
-
-function endGuidedTour() {
-    const tourBox = document.getElementById('tour-description');
-    if (tourBox) tourBox.remove();
-    camera.position.set(0, 5, 10);
-    camera.lookAt(0, 0, 0);
-}
-
 window.addEventListener('load', init);
 
 addTooltips();
 createLegend();
-document.getElementById('start-tour').addEventListener('click', startGuidedTour);
+
