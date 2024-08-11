@@ -59,6 +59,22 @@ body, html {
     transform: scale(1.1);
 }
 
+/* Hamburger menu */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #FFD700;
+    margin: 5px 0;
+    transition: 0.4s;
+}
+
 /* Section styles */
 .section {
     min-height: 100vh;
@@ -176,14 +192,18 @@ h1:hover, h2:hover, h3:hover, p:hover, li:hover {
     max-width: 100%;
     height: calc(100vh - 150px);
     margin-top: 20px;
+    position: relative;
+    z-index: 3;
 }
 
 .pdf-container {
     height: 100%;
     position: relative;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.7);
     border-radius: 10px;
     overflow: hidden;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 #pdf-render {
@@ -193,7 +213,7 @@ h1:hover, h2:hover, h3:hover, p:hover, li:hover {
 }
 
 #prev-page, #next-page {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(255, 255, 255, 0.3);
     color: white;
     border: none;
     padding: 10px;
@@ -203,7 +223,7 @@ h1:hover, h2:hover, h3:hover, p:hover, li:hover {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 10;
+    z-index: 4;
 }
 
 #prev-page {
@@ -215,11 +235,51 @@ h1:hover, h2:hover, h3:hover, p:hover, li:hover {
 }
 
 #prev-page:hover, #next-page:hover {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Adjust the About section content */
+#about .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    padding-top: 60px;
+}
+
+#about h2 {
+    margin-bottom: 20px;
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
+    .hamburger {
+        display: block;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+    }
+
+    .menu-items {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    .menu-items.show {
+        display: flex;
+    }
+
+    .menu-items li {
+        margin: 10px 0;
+        text-align: center;
+    }
+
     h1 { font-size: 2.5rem; }
     h2 { font-size: 2rem; }
     h3 { font-size: 1.5rem; }
@@ -239,6 +299,11 @@ h1:hover, h2:hover, h3:hover, p:hover, li:hover {
     #prev-page, #next-page {
         padding: 5px;
         font-size: 14px;
+    }
+
+    .bg-video {
+        height: 100%;
+        width: auto;
     }
 }
 

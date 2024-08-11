@@ -106,7 +106,7 @@ function renderPage(num) {
         }
         const scaleX = container.clientWidth / viewport.width;
         const scaleY = container.clientHeight / viewport.height;
-        const scale = Math.min(scaleX, scaleY);
+        const scale = Math.min(scaleX, scaleY) * 0.9; // Reduce scale slightly to fit within container
         
         const scaledViewport = page.getViewport({scale: scale});
 
@@ -115,7 +115,8 @@ function renderPage(num) {
 
         const renderContext = {
             canvasContext: ctx,
-            viewport: scaledViewport
+            viewport: scaledViewport,
+            background: 'rgba(255, 255, 255, 0.8)' // Add a white background to improve visibility
         };
         const renderTask = page.render(renderContext);
 
