@@ -173,7 +173,7 @@ function addTooltips() {
 
     Object.keys(tooltipData).forEach(componentId => {
         const component = scene.getObjectByName(componentId);
-        if (component) {
+        if (component) { // Check if component exists
             const tooltip = document.createElement('div');
             tooltip.className = 'tooltip';
             tooltip.textContent = tooltipData[componentId];
@@ -183,6 +183,8 @@ function addTooltips() {
 
             component.addEventListener('mouseover', showTooltip);
             component.addEventListener('mouseout', hideTooltip);
+        } else {
+            console.warn(`Component with ID '${componentId}' not found.`);
         }
     });
 }
@@ -197,6 +199,7 @@ function showTooltip(event) {
 function hideTooltip(event) {
     event.target.userData.tooltip.style.display = 'none';
 }
+
 
 function createLegend() {
     const legend = document.createElement('div');
