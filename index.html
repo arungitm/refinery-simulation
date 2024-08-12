@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ENERBLAZE Petrochemicals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
 </head>
 <body>
@@ -20,29 +22,30 @@
         <ul class="menu-items">
             <li><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
+            <li><a href="#refinery">Refinery</a></li>
             <li><a href="#ethics">Ethics</a></li>
+            <li><a href="#news">News</a></li>
             <li><a href="#contact">Contact</a></li>
-            <li><a href="refinery-simulation.html">Refinery Simulation</a></li>
         </ul>
     </nav>
 
-    <div id="home" class="section video-section">
+    <section id="home" class="section video-section">
         <video class="bg-video" autoplay loop muted playsinline>
-            <source src="home-background.mp4" type="video/mp4">
+            <source src="assets/home-background.mp4" type="video/mp4">
         </video>
         <div class="content">
             <h1>ENERBLAZE Petrochemicals</h1>
             <p>Igniting the future of energy with precision and innovation</p>
-            <a href="refinery-simulation.html" class="cta-button">Experience Our Refinery</a>
+            <a href="#refinery" class="cta-button">Explore Our Refineries</a>
         </div>
-    </div>
+    </section>
 
-    <div id="about" class="section video-section">
+    <section id="about" class="section video-section">
         <video class="bg-video" autoplay loop muted playsinline>
-            <source src="about-background.mp4" type="video/mp4">
+            <source src="assets/about-background.mp4" type="video/mp4">
         </video>
         <div class="content">
-            <h2>EnerBlaze Company Profile</h2>
+            <h2>About Us</h2>
             <div id="pdf-carousel">
                 <div class="pdf-container">
                     <canvas id="pdf-render"></canvas>
@@ -53,15 +56,24 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div id="ethics" class="section video-section">
+    <section id="refinery" class="section">
+        <div class="content">
+            <h2>Our Refineries</h2>
+            <div class="gallery">
+                <!-- Add gallery images here -->
+            </div>
+        </div>
+    </section>
+
+    <section id="ethics" class="section video-section">
         <video class="bg-video" autoplay loop muted playsinline>
-            <source src="ethics-background.mp4" type="video/mp4">
+            <source src="assets/ethics-background.mp4" type="video/mp4">
         </video>
         <div class="content">
             <h2>Our Code of Ethics</h2>
-            <ul>
+            <ul class="ethics-list">
                 <li>Commitment to environmental sustainability</li>
                 <li>Transparent business practices</li>
                 <li>Fair trade and ethical sourcing</li>
@@ -69,24 +81,69 @@
                 <li>Community engagement and support</li>
             </ul>
         </div>
-    </div>
+    </section>
 
-    <div id="contact" class="section video-section">
+    <section id="news" class="section video-section">
         <video class="bg-video" autoplay loop muted playsinline>
-            <source src="contact-background.mp4" type="video/mp4">
+            <source src="assets/news-background.mp4" type="video/mp4">
+        </video>
+        <div class="content">
+            <h2>Latest News</h2>
+            <div class="news-slider">
+                <div class="news-item">
+                    <h3>UAE Oil Production Set for Surge in 2024</h3>
+                    <p>The United Arab Emirates is set to increase its oil production capacity significantly. Starting January 2024, the UAE's output target will rise to 3.075 million barrels per day, marking an increase of 135,000 barrels from the previous month.</p>
+                    <a href="https://www.worldoil.com/news/2023/11/20/prominent-opec-player-uae-set-for-output-surge-in-2024-following-quota-adjustment/" target="_blank" rel="noopener noreferrer">Read more</a>
+                </div>
+                <div class="news-item">
+                    <h3>India's Export Market Sees Substantial Growth</h3>
+                    <p>India's export market has expanded significantly, particularly in the technology and textile sectors. This growth is driven by new trade agreements and increased demand in international markets.</p>
+                    <a href="https://english.alarabiya.net/business/energy/2024/05/02/uae-raises-oil-capacity-number-one-month-before-opec-meeting" target="_blank" rel="noopener noreferrer">Read more</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section video-section">
+        <video class="bg-video" autoplay loop muted playsinline>
+            <source src="assets/contact-background.mp4" type="video/mp4">
         </video>
         <div class="content">
             <h2>Contact Us</h2>
             <p>Ready to energize your business? Get in touch with us today.</p>
-            <a href="mailto:info@enerblaze.com" class="cta-button">Contact Now</a>
+            <a href="mailto:info@enerblaze.ae" class="cta-button">Contact Now</a>
         </div>
-    </div>
+    </section>
+
+    <section id="map" class="section">
+        <div class="content">
+            <h2>Our Locations</h2>
+            <div id="google-map"></div>
+            <div class="contact-addresses">
+                <div class="address">
+                    <h3>Registered Office</h3>
+                    <p>P1-ELOB Office No. E-42F-02, Hamriya Free Zone<br>
+                    Emirate : Sharjah<br>
+                    Country : United Arab Emirates</p>
+                    <p>Phone: +971 6 530 8770</p>
+                </div>
+                <div class="address">
+                    <h3>Operations</h3>
+                    <p>Floor F1, Room 114, Emissa Tower,<br>
+                    Near ADIB Bank Ajman, Al Ittihad St - Mushairif<br>
+                    Emirate : Ajman<br>
+                    Country : UNITED ARAB EMIRATES</p>
+                    <p>Phone: +971 55 1122 086</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <div class="pipeline">
         <div class="oil-flow"></div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC03NcYW01Aa8OwScf9bT5vlc0DVtxmZko&callback=initMap" async defer></script>
     <script src="main.js"></script>
 </body>
 </html>

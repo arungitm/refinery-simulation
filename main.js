@@ -1,4 +1,4 @@
-// Particle effect and other main page specific code here
+// Particle effect and other main page specific code
 function initMainPage() {
     if (document.getElementById('particles-js')) {
         particlesJS('particles-js', {
@@ -21,6 +21,25 @@ function initMainPage() {
     }
 }
 
+// Smooth scrolling
+function initSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+}
+
+// Video background playback
 function initVideoBackgrounds() {
     const videoSections = document.querySelectorAll('.video-section');
     
@@ -42,37 +61,6 @@ function initVideoBackgrounds() {
             observer.observe(section);
         }
     });
-}
-
-function initSmoothScrolling() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            const targetElement = document.getElementById(targetId);
-            
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-}
-
-function createOilDrops() {
-    const body = document.body;
-    for (let i = 0; i < 20; i++) {
-        const drop = document.createElement('div');
-        drop.classList.add('oil-drop');
-        const size = Math.random() * 20 + 10;
-        drop.style.width = `${size}px`;
-        drop.style.height = `${size}px`;
-        drop.style.left = `${Math.random() * 100}%`;
-        drop.style.top = `${Math.random() * 100}%`;
-        body.appendChild(drop);
-    }
 }
 
 // PDF viewer functionality
@@ -183,21 +171,54 @@ function initPDFViewer() {
     });
 }
 
+// Mobile menu functionality
 function initMobileMenu() {
-    const menuIcon = document.querySelector('.menu-icon');
+    const hamburger = document.querySelector('.hamburger');
     const menuItems = document.querySelector('.menu-items');
 
-    if (menuIcon && menuItems) {
-        menuIcon.addEventListener('click', () => {
+    if (hamburger && menuItems) {
+        hamburger.addEventListener('click', () => {
             menuItems.classList.toggle('show');
+            hamburger.classList.toggle('active');
         });
 
         menuItems.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 menuItems.classList.remove('show');
+                hamburger.classList.remove('active');
             });
         });
     }
+}
+
+// Google Maps initialization
+function initMap() {
+    const center = { lat: 25.372850, lng: 55.414405 };
+    const map = new google.maps.Map(document.getElementById('google-map'), {
+        zoom: 11,
+        center: center
+    });
+
+    const locations = [
+        { lat: 25.344307, lng: 55.389111, title: 'Registered Office - Sharjah' },
+        { lat: 25.401394, lng: 55.439699, title: 'Operations - Ajman' }
+    ];
+
+    locations.forEach(location => {
+        const marker = new google.maps.Marker({
+            position: location,
+            map: map,
+            title: location.title
+        });
+
+        const infoWindow = new google.maps.InfoWindow({
+            content: `<h3>${location.title}</h3>`
+        });
+
+        marker.addListener('click', () => {
+            infoWindow.open(map, marker);
+        });
+    });
 }
 
 // Initialize everything
@@ -205,7 +226,6 @@ function init() {
     initMainPage();
     initVideoBackgrounds();
     initSmoothScrolling();
-    createOilDrops();
     initPDFViewer();
     initMobileMenu();
     
@@ -219,7 +239,31 @@ function init() {
             renderPage(pageNum);
         }
     });
+
+    // Add subtle animations on scroll
+    const animatedElements = document.querySelectorAll('.content > *');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    animatedElements.forEach(el => observer.observe(el));
 }
 
 // Call init when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', init);
+
+// Load Google Maps API
+function loadGoogleMapsAPI() {
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyC03NcYW01Aa8OwScf9bT5vlc0DVtxmZko&callback=initMap`;
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+}
+
+// Call loadGoogleMapsAPI after the DOM is loaded
+document.addEventListener('DOMContentLoaded', loadGoogleMapsAPI);

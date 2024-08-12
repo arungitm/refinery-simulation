@@ -18,9 +18,28 @@ body, html {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+    background: linear-gradient(
+        45deg,
+        rgba(0, 0, 0, 0.7) 0%,
+        rgba(0, 0, 0, 0.3) 100%
+    );
     pointer-events: none;
     z-index: 1;
+}
+
+/* Hover animations */
+h1, h2, h3, p, li {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+h1:hover, h2:hover, h3:hover {
+    transform: scale(1.05);
+    color: #ffc857;
+}
+
+p:hover, li:hover {
+    transform: translateX(10px);
+    color: #ffc857;
 }
 
 /* Navigation styles */
@@ -86,11 +105,12 @@ body, html {
 }
 
 .content {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
     text-align: center;
     color: white;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    padding: 2rem;
 }
 
 /* Video background styles */
@@ -120,16 +140,6 @@ h1, h2, h3 {
 h1 { font-size: 3.5rem; color: #FFD700; }
 h2 { font-size: 2.5rem; color: #FFA500; margin-top: 0; }
 h3 { font-size: 2rem; color: #FFD700; }
-
-/* Hover animations */
-h1, h2, h3, p, li {
-    transition: transform 0.3s ease, color 0.3s ease;
-}
-
-h1:hover, h2:hover, h3:hover, p:hover, li:hover {
-    transform: translateY(-5px);
-    color: #ffc857;
-}
 
 /* Button styles */
 .cta-button {
@@ -213,43 +223,148 @@ h1:hover, h2:hover, h3:hover, p:hover, li:hover {
 }
 
 #prev-page, #next-page {
-    background-color: rgba(255, 255, 255, 0.3);
-    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
     border: none;
-    padding: 10px;
-    cursor: pointer;
+    padding: 10px 15px;
     font-size: 18px;
-    transition: background-color 0.3s ease;
+    cursor: pointer;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 4;
+    z-index: 10;
 }
 
-#prev-page {
-    left: 10px;
+#prev-page { left: 10px; }
+#next-page { right: 10px; }
+
+/* Ethics list styles */
+.ethics-list {
+    text-align: left;
+    display: inline-block;
+    margin: 0 auto;
 }
 
-#next-page {
-    right: 10px;
+/* News section styles */
+#news .content {
+    position: relative;
+    z-index: 2;
 }
 
-#prev-page:hover, #next-page:hover {
-    background-color: rgba(255, 255, 255, 0.5);
+.news-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 20px;
+    padding: 20px 0;
 }
 
-/* Adjust the About section content */
-#about .content {
+.news-item {
+    flex: 0 0 auto;
+    width: 300px;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    scroll-snap-align: start;
+}
+
+.news-item h3 {
+    color: #FFD700;
+    margin-top: 0;
+}
+
+.news-item a {
+    color: #FFA500;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.news-item a:hover {
+    text-decoration: underline;
+}
+
+/* Contact section styles */
+.contact-wrapper {
+    display: flex;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.contact-form, .contact-details {
+    flex: 1;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.contact-form form {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    height: 100vh;
-    padding-top: 60px;
+    gap: 10px;
 }
 
-#about h2 {
+.contact-form input, .contact-form textarea {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.contact-form textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.office-details {
+    display: flex;
+    gap: 20px;
     margin-bottom: 20px;
+}
+
+.office-details > div {
+    flex: 1;
+}
+
+.contact-details h3, .contact-details h4 {
+    color: #FFD700;
+    margin-top: 0;
+}
+
+.contact-details a {
+    color: #FFA500;
+    text-decoration: none;
+}
+
+.contact-details a:hover {
+    text-decoration: underline;
+}
+
+/* Contact addresses styles */
+.contact-addresses {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.address {
+    flex: 0 0 48%;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.address h3 {
+    color: #FFD700;
+    margin-top: 0;
+}
+
+/* Google Maps styles */
+#google-map {
+    width: 100%;
+    height: 400px;
+    margin-top: 20px;
+    border-radius: 10px;
 }
 
 /* Responsive design */
@@ -298,12 +413,42 @@ h1:hover, h2:hover, h3:hover, p:hover, li:hover {
 
     #prev-page, #next-page {
         padding: 5px;
-        font-size: 14px;
+        font-size: 18px;
     }
 
     .bg-video {
         height: 100%;
         width: auto;
+    }
+
+    .ethics-list {
+        padding-left: 20px;
+    }
+
+    .contact-wrapper {
+        flex-direction: column;
+    }
+
+    .office-details {
+        flex-direction: column;
+    }
+
+    .news-slider {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .news-item {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .contact-addresses {
+        flex-direction: column;
+    }
+
+    .address {
+        margin-bottom: 20px;
     }
 }
 
@@ -319,6 +464,32 @@ h1:hover, h2:hover, h3:hover, p:hover, li:hover {
 
     #prev-page, #next-page {
         padding: 3px;
-        font-size: 12px;
+        font-size: 16px;
     }
+}
+
+/* Ensure visibility of elements */
+body .gradient-overlay,
+body .oil-drop,
+body .pipeline {
+    display: block !important;
+}
+
+/* Accessibility styles */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Focus styles for keyboard navigation */
+a:focus, button:focus {
+    outline: 2px solid #FFD700;
+    outline-offset: 2px;
 }
