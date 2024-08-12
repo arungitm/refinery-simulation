@@ -179,16 +179,45 @@ function initMobileMenu() {
     if (hamburger && menuItems) {
         hamburger.addEventListener('click', () => {
             menuItems.classList.toggle('show');
-            hamburger.classList.toggle('active');
         });
 
+        // Close menu when a menu item is clicked
         menuItems.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 menuItems.classList.remove('show');
-                hamburger.classList.remove('active');
             });
         });
     }
+}
+
+// Gallery carousel functionality
+function initGalleryCarousel() {
+    const track = document.querySelector('.gallery-track');
+    const items = track.children;
+    const prevButton = document.querySelector('.gallery-prev');
+    const nextButton = document.querySelector('.gallery-next');
+    let currentIndex = 0;
+
+    function showItem(index) {
+        const itemWidth = items[0].getBoundingClientRect().width;
+        track.style.transform = `translateX(-${index * itemWidth}px)`;
+        currentIndex = index;
+    }
+
+    prevButton.addEventListener('click', () => {
+        if (currentIndex > 0) {
+            showItem(currentIndex - 1);
+        }
+    });
+
+    nextButton.addEventListener('click', () => {
+        if (currentIndex < items.length - 1) {
+            showItem(currentIndex + 1);
+        }
+    });
+
+    // Initialize first item
+    showItem(0);
 }
 
 // Google Maps initialization
@@ -228,6 +257,7 @@ function init() {
     initSmoothScrolling();
     initPDFViewer();
     initMobileMenu();
+    initGalleryCarousel();
     
     const prevPage = document.getElementById('prev-page');
     const nextPage = document.getElementById('next-page');

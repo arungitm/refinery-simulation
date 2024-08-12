@@ -14,24 +14,25 @@
     <div id="particles-js"></div>
 
     <nav class="nav">
-        <div class="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <ul class="menu-items">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#refinery">Refinery</a></li>
-            <li><a href="#ethics">Ethics</a></li>
-            <li><a href="#news">News</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
+    <button class="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <ul class="menu-items">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#refinery">Refinery</a></li>
+        <li><a href="#ethics">Ethics</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
 
     <section id="home" class="section video-section">
         <video class="bg-video" autoplay loop muted playsinline>
-            <source src="assets/home-background.mp4" type="video/mp4">
+            <source src="assets/home-background-720p.mp4" type="video/mp4" media="(min-width: 720px)">
+            <source src="assets/home-background-480p.mp4" type="video/mp4">
         </video>
         <div class="content">
             <h1>ENERBLAZE Petrochemicals</h1>
@@ -42,7 +43,8 @@
 
     <section id="about" class="section video-section">
         <video class="bg-video" autoplay loop muted playsinline>
-            <source src="assets/about-background.mp4" type="video/mp4">
+            <source src="assets/about-background-720p.mp4" type="video/mp4" media="(min-width: 720px)">
+            <source src="assets/about-background-480p.mp4" type="video/mp4">
         </video>
         <div class="content">
             <h2>About Us</h2>
@@ -58,22 +60,34 @@
         </div>
     </section>
 
-    <section id="refinery" class="section">
-        <div class="content">
-            <h2>Our Refineries</h2>
-            <div class="gallery">
-                <!-- Add gallery images here -->
+   <section id="refinery" class="section">
+    <div class="content">
+        <h2>Our Refineries</h2>
+        <div class="gallery-carousel">
+            <div class="gallery-track">
+                <img src="images/refinery-image-1.jpg" alt="Refinery Image 1" loading="lazy">
+                <img src="images/refinery-image-2.jpg" alt="Refinery Image 2" loading="lazy">
+                <img src="images/refinery-image-3.jpg" alt="Refinery Image 3" loading="lazy">
+                <img src="images/refinery-image-4.jpg" alt="Refinery Image 4" loading="lazy">
+                <video class="gallery-video" controls preload="metadata">
+                    <source src="images/refinery-video-1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
             </div>
+            <button class="gallery-prev">&#10094;</button>
+            <button class="gallery-next">&#10095;</button>
         </div>
-    </section>
+    </div>
+</section>
 
     <section id="ethics" class="section video-section">
         <video class="bg-video" autoplay loop muted playsinline>
-            <source src="assets/ethics-background.mp4" type="video/mp4">
+            <source src="assets/ethics-background-720p.mp4" type="video/mp4" media="(min-width: 720px)">
+            <source src="assets/ethics-background-480p.mp4" type="video/mp4">
         </video>
         <div class="content">
             <h2>Our Code of Ethics</h2>
-            <ul class="ethics-list">
+            <ul>
                 <li>Commitment to environmental sustainability</li>
                 <li>Transparent business practices</li>
                 <li>Fair trade and ethical sourcing</li>
@@ -85,10 +99,11 @@
 
     <section id="news" class="section video-section">
         <video class="bg-video" autoplay loop muted playsinline>
-            <source src="assets/news-background.mp4" type="video/mp4">
+            <source src="assets/news-background-720p.mp4" type="video/mp4" media="(min-width: 720px)">
+            <source src="assets/news-background-480p.mp4" type="video/mp4">
         </video>
         <div class="content">
-            <h2>Latest News</h2>
+            <h2>Trending News</h2>
             <div class="news-slider">
                 <div class="news-item">
                     <h3>UAE Oil Production Set for Surge in 2024</h3>
@@ -106,7 +121,8 @@
 
     <section id="contact" class="section video-section">
         <video class="bg-video" autoplay loop muted playsinline>
-            <source src="assets/contact-background.mp4" type="video/mp4">
+            <source src="assets/contact-background-720p.mp4" type="video/mp4" media="(min-width: 720px)">
+            <source src="assets/contact-background-480p.mp4" type="video/mp4">
         </video>
         <div class="content">
             <h2>Contact Us</h2>
